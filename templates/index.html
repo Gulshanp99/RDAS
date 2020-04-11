@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RDAS | Dashboard</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Francois+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Semi+Expanded" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css?family=Krona+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet"> 
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+  <script type="text/javascript" src="../static/js/jquery.min.js"></script>
+  <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../static/js/d3/d3.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css">
+ <!--  <script type="text/javascript" src="../js/style.js"></script> -->
+
+
+<style type="text/css">
+#abc{
+margin-top: 4%;
+width: 8%;
+height: 50px;
+background-color: #06c72d;
+margin-left: 88%;
+}
+.title {
+	font-family: 'Open Sans', sans-serif;
+	/*font-size: 45px;*/
+	padding-top: 5px;
+
+}
+.top {
+	position: fixed;
+  	top: 0px; 
+  	width: 100%;
+  	z-index: 1;
+  	box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+}	
+
+.head {
+	color: #c76063;
+	text-shadow: 2px 2px 4px rgba(255,255,255,0.6);
+	font-size: 50px;
+}
+
+.logo {
+	height: 100px;
+	width: 150px;
+	padding-left: 10px;
+}
+
+.side-bar {
+	/*background-color: #ff471a;*/
+	padding-top: 20px;
+	padding-bottom: 20px;
+	text-align: center;	
+}
+
+.side-bar:hover {
+	transform: scale(1.1, 1);
+	/*background-color: #ff471a;*/
+	border-radius: 15px 0px 15px 0px;
+	box-shadow: 0px 7px 5px #ad5154;
+	transition: 0.3s;
+}
+
+.card {
+	margin-left: 22px;
+	margin-right: 5px;
+	margin-bottom: 30px;
+	border-width: 15px;
+	border-color:white;
+	box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+	border-radius: 7px;
+	margin-top: 20px;
+	background-color: white;
+	padding-top: 15px;
+
+}
+
+.card:hover {
+	transition: 0.3s;
+	box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+	transform: scale(1.1,1.1);
+}
+
+.container {
+	padding-bottom: 5px;
+}
+.container-wide{
+	width: 100%;
+	height: 500px;
+	padding-bottom: 5px;
+}
+
+.stations{
+	position: fixed;
+	z-index: 1;
+	background-color: #c76063;
+  	height: 100%;
+  	left: 0px;
+	box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+
+}
+.firstgif {
+    width: 60%;
+    height: 50%;
+    object-fit: cover;
+
+  }
+</style>
+
+</head>
+
+<body style="background-color:#E8E8E8; overflow-x:hidden;">
+	<div class="container-fluid top">
+		<div class="row" id="navbar" style="background-color:#E8E8E8;">
+			<div class="col-md-2 col-sm-12">
+				<center><a href="index.html"><img src="../static/imgs/logo.png" class="logo" style="padding-top: 10px;"></a></center>
+			</div>
+			<div class="col-md-10 col-sm-12 title">
+				<center><a href="index.html" class="head" style="color: #29256b;"><b>Railway Data Analysis System (RDAS)</b></a></center>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid" style="padding-top: 100px;">
+		<div class="row" >
+			<div class="col-md-2 col-sm-12 stations" style="background-color: #1e1b59;">
+				<div class="side-bar"><a href="#DASHBOARD" target="_self" style="color: white;">DASHBOARD</a></div>
+				<div class="side-bar"><a href="#VIRAR" target="_self" style="color: white;">VIRAR</a></div>
+				<div class="side-bar"><a href="#VASAI" target="_self" style="color: white;">VASAI</a></div>
+				
+				<div class="side-bar"><a href="#PALGHAR" target="_self" style="color: white;">PALGHAR</a></div>
+				
+				<div class="side-bar"><a href="#BORIVALI" target="_self" style="color: white;">BORIVALI</a></div>
+				
+				<div class="side-bar"><a href="#DADAR" target="_self" style="color: white;">DADAR</a></div>
+				<hr style="border-color: white; padding-left: 5px; padding-right: 5px;border-width: 5px;border-radius: 5px;">
+
+				<center><h3 style="color: white;">Suggestions</h3>
+					<marquee direction='up' style="transition-delay: 0.5s; overflow:scroll; overflow-x: hidden; overflow-y:scroll; background-color: white; color: #1e1b59;height:80%;border-radius: 5px 50px;font-family: sans-serif;font-size: 17px;">{{s}} Station Needs More Trains to deploy as it is most crowded. <br><br>{{s1}} is the most visited station hence minutes of halt and number of trains should increase in this station. <br><br>{{s2}} is the least visited station. <br><br>Peak hours :- {{o}} Avoid Going at this time <br><br> Relaxing hours :-{{p}} Can travel at this time</marquee>
+				</center>
+			</div>
+			<br>
+			<!-- 	<div class="col-md-1 col-sm-12"></div> -->
+			</div>
+															<!-- center image -->
+			<div class="row" style="background-color: white;box-shadow: 0px 4px 8px rgba(0,0,0,0.2);">
+				<!-- #43568b -->
+				<div class="col-md-2 col-sm-12"></div>
+				<div class="col-md-10 col-sm-12" style="height: 550px;">
+					<img src="../static/imgs/gif1.gif"  style="width: 100%;height: 550px;">
+					<!-- <div class="container">
+						<h3>container 1</h3>
+						<h5>description</h5>
+					</div> -->
+				</div>
+				
+		</div>
+
+		<!-- Dashboard -->
+		<section id="DASHBOARD">
+
+			<div class="row">
+			<div class="col-md-2 col-sm-12"></div>
+
+			<div class="col-md-6 col-sm-12 card"   style=" box-sizing: border-box; max-width: 675px;margin-left: 30px;background-color: #f00e30;height: 500px;">
+					<!-- <img src="bg9.jpg" style="width: 100%;height: 375px;"> -->
+
+					<h3 style="color: white">Total count of passengers travelled to each Station.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph11">
+		    <script>
+		        var graph17 = {{plot17 | safe}};
+		        
+		        Plotly.plot('bargraph11',graph17,{});
+		        
+		    </script>
+	  </div>
+	  </div>
+				</div>
+				<div class="col-md-3 col-sm-12"></div>
+				<div class="col-md-4 col-sm-12 card"   style=" box-sizing: border-box;max-width: 50%;margin-left: 25px;background-color: #f00e30;height: 500px;">
+					<!-- <img src="../static/imgs/bg9.jpg" style="width: 100%;height: 375px;"> -->
+					<h3 style="color: white">Total Passengers Travelled from each Station till Date.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph10">
+		    <script>
+		        var graph16 = {{plot16 | safe}};
+		        
+		        Plotly.plot('bargraph10',graph16,{});
+		        
+		    </script>
+	  </div>
+	  </div>
+				</div>
+				
+														<!-- wide card or graph -->
+			<div class="col-md-2 col-sm-12"></div>
+
+			<div class="col-md-6 col-sm-12 card"   style=" box-sizing: border-box; max-width: 675px;margin-left: 30px;background-color: #f58d05;height: 500px;">
+					<!-- <img src="bg9.jpg" style="width: 100%;height: 375px;"> -->
+
+					<h3 style="color: white">Total passengers travelled per day till now.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph12">
+		    <script>
+		        var graph18 = {{plot18 | safe}};
+		        
+		        Plotly.plot('bargraph12',graph18,{});
+		        
+		    </script>
+	  </div>
+	  </div>
+				</div>
+				<div class="col-md-3 col-sm-12"></div>
+				<div class="col-md-4 col-sm-12 card"   style=" box-sizing: border-box;max-width: 50%;margin-left: 25px;background-color: #f58d05;height: 500px;">
+					<!-- <img src="../static/imgs/bg9.jpg" style="width: 100%;height: 375px;"> -->
+					<h3 style="color: white">Total Revenue Collected by each Station till Date.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div id="piegraph5" >
+		    <script>
+		        var pie6 = {{plot15 | safe}};
+		        
+		        Plotly.plot('piegraph5',pie6,{});
+		        
+		    </script>
+	 </div>
+					</div>
+					
+				</div>
+			
+<button onclick="function1()" id="abc" style="font-size: 100%; ">Predict Now</button>
+<div id="myDIV" style="display: none;">
+  <section id="DASHBOARD">
+
+			<div class="row">
+			<div class="col-md-2 col-sm-12"></div>
+
+			<div class="col-md-6 col-sm-12 card"   style=" box-sizing: border-box; max-width: 675px;margin-left: 30px;background-color: #f00e30;height: 500px;">
+					<!-- <img src="bg9.jpg" style="width: 100%;height: 375px;"> -->
+
+					<h3 style="color: white">Time series analysis of Crowd.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph25">
+		    <script>
+		        var graph25 = {{plot36 | safe}};
+		        
+		        Plotly.plot('bargraph25',graph25,{});
+		        
+		    </script>
+	  </div>
+	  </div>
+				</div>
+				<div class="col-md-3 col-sm-12"></div>
+				<div class="col-md-4 col-sm-12 card"   style=" box-sizing: border-box;max-width: 50%;margin-left: 25px;background-color: #f00e30;height: 500px;">
+					<!-- <img src="../static/imgs/bg9.jpg" style="width: 100%;height: 375px;"> -->
+					<h3 style="color: white">Next week Crowd prediction.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph24">
+		    <script>
+		        var graph24 = {{plot35 | safe}};
+		        
+		        Plotly.plot('bargraph24',graph24,{});
+		        
+		    </script>
+	  </div>
+	  </div>
+				</div>
+				
+														<!-- wide card or graph -->
+			<div class="col-md-2 col-sm-12"></div>
+
+			<div class="col-md-6 col-sm-12 card"   style=" box-sizing: border-box; max-width: 675px;margin-left: 30px;background-color: #f58d05;height: 500px;">
+					<!-- <img src="bg9.jpg" style="width: 100%;height: 375px;"> -->
+
+					<h3 style="color: white">Total passengers estimated arrival on a particular station on next day.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph23">
+		    <script>
+		        var graph23 = {{plot37 | safe}};
+		        
+		        Plotly.plot('bargraph23',graph23,{});
+		        
+		    </script>
+	  </div>
+	  </div>
+				</div>
+				<div class="col-md-3 col-sm-12"></div>
+				<div class="col-md-4 col-sm-12 card"   style=" box-sizing: border-box;max-width: 50%;margin-left: 25px;background-color: #f58d05;height: 500px;">
+					<!-- <img src="../static/imgs/bg9.jpg" style="width: 100%;height: 375px;"> -->
+					<h3 style="color: white">Tomorrow's estimated Departure of passenger's from a= particular station.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div id="piegraph11" >
+		    <script>
+		        var pie11 = {{plot34 | safe}};
+		        
+		        Plotly.plot('piegraph11',pie11,{});
+		        
+		    </script>
+	 </div>
+					</div>
+					
+				</div>
+</div>
+		</section>
+		<br><br>
+</div>
+</div>
+		</section>
+		<br><br>
+														<!-- 2 cards adjoining image -->
+<!-- VIRAR -->
+		<section id="VIRAR">
+
+			<div class="row">
+			<div class="col-md-2 col-sm-12"></div>
+			<div class="col-md-6 col-sm-12 card"   style=" box-sizing: border-box; max-width: 675px;margin-left: 30px;background-color: #43568b;height: 500px;">
+					<!-- <img src="bg9.jpg" style="width: 100%;height: 375px;"> -->
+
+					<h3 style="color: white">Percentage of Individuals Travelling from Virar to Other Stations.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div id="piegraph" >
+		    <script>
+		        var pie1 = {{plot | safe}};
+		        
+		        Plotly.plot('piegraph',pie1,{});
+		        
+		    </script>
+	 </div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-12"></div>
+				<div class="col-md-4 col-sm-12 card"   style=" box-sizing: border-box;max-width: 50%;margin-left: 25px;background-color: #43568b;height: 500px;">
+					<!-- <img src="../static/imgs/bg9.jpg" style="width: 100%;height: 375px;"> -->
+					<h3 style="color: white">Individuals going from Virar with respect to Week Days.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph">
+		    <script>
+		        var graph1 = {{plot1 | safe}};
+		        
+		        Plotly.plot('bargraph',graph1,{});
+		        
+		    </script>
+	  </div>
+	  </div>
+				</div>
+				
+														<!-- wide card or graph -->
+			<div class="row" >
+				<div class="col-md-3 col-sm-12"></div>
+				<div class="col-md-9 col-sm-12 card" style="margin-left: 21%;background-color: #589167;">
+					<!-- <img src="../static/imgs/bg9.jpg" style="object-fit: cover;width: 100%;height: 375px;"> -->
+					<h3 style="color: white">Revenue Generated from Virar Station with respect to others.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph1">
+		    <script>
+		        var graph2 = {{plot2 | safe}};
+		        
+		        Plotly.plot('bargraph1',graph2,{});
+		        
+		    </script>
+	  </div>
+	  </div>
+
+			</div>
+			</div>
+			<button onclick="function2()" id="abc" style="font-size: 100%; ">Predict Now</button>
+<div id="myDIV1" style="display: none;">
+  <section id="VIRAR">
+
+			<div class="row">
+			<div class="col-md-2 col-sm-12"></div>
+			<div class="col-md-6 col-sm-12 card"   style=" box-sizing: border-box; max-width: 675px;margin-left: 30px;background-color: #43568b;height: 500px;">
+					<!-- <img src="bg9.jpg" style="width: 100%;height: 375px;"> -->
+
+					<h3 style="color: white">Prediction of passengers travelling to particular Stations from Virar.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph13">
+		    <script>
+		        var graph20 = {{plot20 | safe}};
+		        
+		        Plotly.plot('bargraph13',graph20,{});
+		        
+		    </script>
+	  </div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-12"></div>
+				<div class="col-md-4 col-sm-12 card"   style=" box-sizing: border-box;max-width: 50%;margin-left: 25px;background-color: #43568b;height: 500px;">
+					<!-- <img src="../static/imgs/bg9.jpg" style="width: 100%;height: 375px;"> -->
+					<h3 style="color: white">Prediction of passengers travelling on Week Days from Virar.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					
+					<div id="piegraph6" >
+		    <script>
+		        var pie6 = {{plot19 | safe}};
+		        
+		        Plotly.plot('piegraph6',pie6,{});
+		        
+		    </script>
+	 </div>
+	  </div>
+				</div>
+				
+														<!-- wide card or graph -->
+			
+
+			<div class="row" >
+				<div class="col-md-3 col-sm-12"></div>
+				<div class="col-md-9 col-sm-12 card" style="margin-left: 21%;background-color: #589167;">
+					<!-- <img src="../static/imgs/bg9.jpg" style="object-fit: cover;width: 100%;height: 375px;"> -->
+					<h3 style="color: white">Time series crowd analysis of Passengers for Virar.</h3>
+					<div class="container-wide" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph14">
+		    <script>
+		        var graph21 = {{plot21 | safe}};
+		        
+		        Plotly.plot('bargraph14',graph21,{});
+		        
+		    </script>
+	  </div>
+	  </div>
+
+			</div>
+			</div>
+</div>
+		</section>
+		<br><br>
+</div>
+</div>
+		</section>
+		
+<!-- VASAI -->
+		<section id="VASAI">
+			<div class="row" >
+			<div class="col-md-2 col-sm-12"></div>
+			<div class="col-md-6 col-sm-12 card"   style=" box-sizing: border-box; max-width: 675px;margin-left: 30px;background-color: #64c4ed;height: 500px;">
+					<!-- <img src="../static/imgs/bg9.jpg" style="width: 100%;height: 375px;"> -->
+					<h3 style="color: white">Percentage of Individuals Travelling from Vasai to Other Stations.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div id="piegraph1" >
+		    <script>
+		        var pie2 = {{plot3 | safe}};
+		        
+		        Plotly.plot('piegraph1',pie2,{});
+		        
+		    </script>
+	 </div>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-12 card"   style=" box-sizing: border-box;max-width: 50%;margin-left: 25px;background-color: #64c4ed;height: 500px;">
+				<h3 style="color: white">Individuals going from Vasai with respect to Week Days.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph2">
+		    <script>
+		        var graph4 = {{plot4 | safe}};
+		        
+		        Plotly.plot('bargraph2',graph4,{});
+		        
+		    </script>
+	  </div>
+	  </div>
+
+				</div>
+				
+		</div>
+														<!-- wide card or graph -->
+		<div class="row" >
+			<div class="col-md-3 col-sm-12"></div>
+			<div class="col-md-9 col-sm-12 card" style="margin-left: 21%;background-color: #589167;">
+			<h3 style="color: white">Revenue Generated from Vasai Station with respect to others.</h3>
+				<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph3">
+		    <script>
+		        var graph5 = {{plot5 | safe}};
+		        
+		        Plotly.plot('bargraph3',graph5,{});
+		       
+		    </script>
+	  </div>
+	  </div>
+			</div>
+			<button id='abc' type="button" onclick="function3()">Predict Now</button>
+ <div id="myDIV2" style="display: none;">
+  <section id="VASAI">
+
+			<div class="row">
+			<div class="col-md-2 col-sm-12"></div>
+			<div class="col-md-6 col-sm-12 card"   style=" box-sizing: border-box; max-width: 675px;margin-left: 30px;background-color: #64c4ed;height: 500px;">
+					<!-- <img src="bg9.jpg" style="width: 100%;height: 375px;"> -->
+
+					<h3 style="color: white">Prediction of passengers travelling to particular Stations from Vasai.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph15">
+		    <script>
+		        var graph23 = {{plot23 | safe}};
+		        
+		        Plotly.plot('bargraph15',graph23,{});
+		        
+		    </script>
+	  </div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-12"></div>
+				<div class="col-md-4 col-sm-12 card"   style=" box-sizing: border-box;max-width: 50%;margin-left: 25px;background-color: #64c4ed;height: 500px;">
+					<!-- <img src="../static/imgs/bg9.jpg" style="width: 100%;height: 375px;"> -->
+					<h3 style="color: white">Prediction of passengers travelling on Week Days from Vasai.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+	  <div id="piegraph7" >
+		    <script>
+		        var pie7 = {{plot22 | safe}};
+		        
+		        Plotly.plot('piegraph7',pie7,{});
+		        
+		    </script>
+	 </div>
+	  </div>
+				</div>
+				
+														<!-- wide card or graph -->
+			<div class="row" >
+				<div class="col-md-3 col-sm-12"></div>
+				<div class="col-md-9 col-sm-12 card" style="margin-left: 21%;background-color: #589167;">
+					<!-- <img src="../static/imgs/bg9.jpg" style="object-fit: cover;width: 100%;height: 375px;"> -->
+					<h3 style="color: white">Time series crowd analysis of Passengers for Vasai.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph16">
+		    <script>
+		        var graph24 = {{plot24 | safe}};
+		        
+		        Plotly.plot('bargraph16',graph24,{});
+		        
+		    </script>
+	  </div>
+	  </div>
+
+			</div>
+
+			</div>
+</div>
+		</section>
+		<br><br>
+</div>
+		</div>
+		</section>
+		<br><br>
+<!-- PALGHAR -->
+		<section id="PALGHAR">
+			<div class="row" >
+			<div class="col-md-2 col-sm-12"></div>
+			<div class="col-md-6 col-sm-12 card"   style="margin-top: -30px; box-sizing: border-box; max-width: 675px;margin-left: 30px;background-color: #ac8daf;height: 500px;">
+			<h3 style="color: white">Percentage of Individuals Travelling from Palghar to Other Stations.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div id="piegraph2" >
+		    <script>
+		        var pie3 = {{plot6 | safe}};
+		        
+		        Plotly.plot('piegraph2',pie3,{});
+		        
+		    </script>
+	 </div>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-12 card"   style="margin-top: -30px; box-sizing: border-box;max-width: 50%;margin-left: 25px;background-color: #ac8daf;height: 500px;">
+				<h3 style="color: white">Individuals going from Palghar with respect to Week Days.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph4">
+		    <script>
+		        var graph6 = {{plot7 | safe}};
+		        
+		        Plotly.plot('bargraph4',graph6,{});
+		        
+		    </script>
+	  </div>
+	  </div>
+				</div>
+				
+		</div>
+														<!-- wide card or graph -->
+		<div class="row" >
+			<div class="col-md-3 col-sm-12"></div>
+			<div class="col-md-9 col-sm-12 card" style="margin-left: 21%;background-color: #589167;">
+			<h3 style="color: white">Revenue Generated from Palghar Station with respect to others.</h3>
+				<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph5">
+		    <script>
+		        var graph7 = {{plot8 | safe}};
+		        
+		        Plotly.plot('bargraph5',graph7,{});
+		       
+		    </script>
+	  </div>
+	  </div>
+			</div>
+			<button onclick="function4()" id="abc" style="font-size: 100%; ">Predict Now</button>
+<div id="myDIV3" style="display: none;">
+  <section id="PALGHAR">
+
+			<div class="row">
+			<div class="col-md-2 col-sm-12"></div>
+			<div class="col-md-6 col-sm-12 card"   style=" box-sizing: border-box; max-width: 675px;margin-left: 30px;background-color: #ac8daf;height: 500px;">
+					<!-- <img src="bg9.jpg" style="width: 100%;height: 375px;"> -->
+
+					<h3 style="color: white">Prediction of passengers travelling to particular Stations fro Palghar.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph17">
+		    <script>
+		        var graph26 = {{plot26 | safe}};
+		        
+		        Plotly.plot('bargraph17',graph26,{});
+		        
+		    </script>
+	  </div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-12"></div>
+				<div class="col-md-4 col-sm-12 card"   style=" box-sizing: border-box;max-width: 50%;margin-left: 25px;background-color: #ac8daf;height: 500px;">
+					<!-- <img src="../static/imgs/bg9.jpg" style="width: 100%;height: 375px;"> -->
+					<h3 style="color: white">Prediction of passengers travelling on Week Days from Palghar.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div id="piegraph8" >
+		    <script>
+		        var pie25 = {{plot25 | safe}};
+		        
+		        Plotly.plot('piegraph8',pie25,{});
+		        
+		    </script>
+	 </div>
+	  </div>
+				</div>
+				
+														<!-- wide card or graph -->
+			<div class="row" >
+				<div class="col-md-3 col-sm-12"></div>
+				<div class="col-md-9 col-sm-12 card" style="margin-left: 21%;background-color: #589167;">
+					<!-- <img src="../static/imgs/bg9.jpg" style="object-fit: cover;width: 100%;height: 375px;"> -->
+					<h3 style="color: white">Time series crowd analysis of Passengers for Palghar.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph18">
+		    <script>
+		        var graph27 = {{plot27 | safe}};
+		        
+		        Plotly.plot('bargraph18',graph27,{});
+		        
+		    </script>
+	  </div>
+	  </div>
+
+			</div>
+
+			</div>
+</div>
+		</section>
+		<br><br>
+</div>
+		</div>
+		</section>
+		<br><br>
+<!-- BORIVALI -->
+		<section id="BORIVALI">
+			<div class="row" >
+			<div class="col-md-2 col-sm-12"></div>
+			<div class="col-md-6 col-sm-12 card"   style="margin-top: -30px; box-sizing: border-box; max-width: 675px;margin-left: 30px;background-color: #28c3d4;height: 500px;">
+			<h3 style="color: white">Percentage of Individuals Travelling from Borivali to Other Stations.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div id="piegraph3" >
+		    <script>
+		        var pie4 = {{plot9 | safe}};
+		        
+		        Plotly.plot('piegraph3',pie4,{});
+		        
+		    </script>
+	 </div>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-12 card"   style="margin-top: -30px; box-sizing: border-box;max-width: 50%;margin-left: 25px;background-color: #28c3d4;height: 500px;">
+				<h3 style="color: white">Individuals going from Borivali with respect to Week Days.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph6">
+		    <script>
+		        var graph8 = {{plot10 | safe}};
+		        
+		        Plotly.plot('bargraph6',graph8,{});
+		        
+		    </script>
+	  </div>
+	  </div>
+				</div>
+				
+		</div>
+														<!-- wide card or graph -->
+		<div class="row" >
+			<div class="col-md-3 col-sm-12"></div>
+			<div class="col-md-9 col-sm-12 card" style="margin-left: 21%;background-color: #f7b71d;">
+			<h3 style="color: white">Revenue Generated from Borivali Station with respect to others.</h3>
+				<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph7">
+		    <script>
+		        var graph9 = {{plot11 | safe}};
+		        
+		        Plotly.plot('bargraph7',graph9,{});
+		       
+		    </script>
+	  </div>
+	  </div>
+			</div>
+			<button onclick="function5()" id="abc" style="font-size: 100%; ">Predict Now</button>
+<div id="myDIV4" style="display: none;">
+  <section id="BORIVALI">
+
+			<div class="row">
+			<div class="col-md-2 col-sm-12"></div>
+			<div class="col-md-6 col-sm-12 card"   style=" box-sizing: border-box; max-width: 675px;margin-left: 30px;background-color: #28c3d4;height: 500px;">
+					<!-- <img src="bg9.jpg" style="width: 100%;height: 375px;"> -->
+
+					<h3 style="color: white">Prediction of passengers travelling to particular Stations from Borivali.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph19">
+		    <script>
+		        var graph29 = {{plot29 | safe}};
+		        
+		        Plotly.plot('bargraph19',graph29,{});
+		        
+		    </script>
+	  </div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-12"></div>
+				<div class="col-md-4 col-sm-12 card"   style=" box-sizing: border-box;max-width: 50%;margin-left: 25px;background-color: #28c3d4;height: 500px;">
+					<!-- <img src="../static/imgs/bg9.jpg" style="width: 100%;height: 375px;"> -->
+					<h3 style="color: white">Prediction of passengers travelling on Week Days from Borivali.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div id="piegraph9" >
+		    <script>
+		        var pie28 = {{plot28 | safe}};
+		        
+		        Plotly.plot('piegraph9',pie28,{});
+		        
+		    </script>
+	 </div>
+	  </div>
+				</div>
+				
+														<!-- wide card or graph -->
+			<div class="row" >
+				<div class="col-md-3 col-sm-12"></div>
+				<div class="col-md-9 col-sm-12 card" style="margin-left: 21%;background-color: #f7b71d;">
+					<!-- <img src="../static/imgs/bg9.jpg" style="object-fit: cover;width: 100%;height: 375px;"> -->
+					<h3 style="color: white">Time series crowd analysis of Passengers for Borivali.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph20">
+		    <script>
+		        var graph30 = {{plot30 | safe}};
+		        
+		        Plotly.plot('bargraph20',graph30,{});
+		        
+		    </script>
+	  </div>
+	  </div>
+
+			</div>
+
+			</div>
+</div>
+		</section>
+		<br><br>
+</div>
+		</div>
+		</section>
+		<br><br>
+<!-- DADAR -->
+		<section id="DADAR" >
+			<div class="row" >
+			<div class="col-md-2 col-sm-12"></div>
+			<div class="col-md-6 col-sm-12 card"   style="margin-top: -30px; box-sizing: border-box; max-width: 675px;margin-left: 30px;background-color: #28c3d4;height: 500px;">
+			<h3 style="color: white">Percentage of Individuals Travelling from Dadar to Other Stations.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div id="piegraph4" >
+		    <script>
+		        var pie5 = {{plot12 | safe}};
+		        
+		        Plotly.plot('piegraph4',pie5,{});
+		        
+		    </script>
+	 </div>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-12 card"   style="margin-top: -30px; box-sizing: border-box;max-width: 50%;margin-left: 25px;background-color: #28c3d4;height: 500px;">
+				<h3 style="color: white">Individuals going from Dadar with respect to Week Days.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph8">
+		    <script>
+		        var graph10 = {{plot13 | safe}};
+		        
+		        Plotly.plot('bargraph8',graph10,{});
+		        
+		    </script>
+	  </div>
+	  </div>
+				</div>
+				
+		</div>
+														<!-- wide card or graph -->
+		<div class="row" >
+			<div class="col-md-3 col-sm-12"></div>
+			<div class="col-md-9 col-sm-12 card" style="margin-left: 21%;background-color: #f7b71d;">
+			<h3 style="color: white">Revenue Generated from Dadar Station with respect to others.</h3>
+				<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph9">
+		    <script>
+		        var graph11 = {{plot14 | safe}};
+		        
+		        Plotly.plot('bargraph9',graph11,{});
+		       
+		    </script>
+	  </div>
+	  </div>
+			</div>
+			<button onclick="function6()" id="abc" style="font-size: 100%; ">Predict Now</button>
+<div id="myDIV5" style="display: none;">
+  <section id="DADAR">
+
+			<div class="row">
+			<div class="col-md-2 col-sm-12"></div>
+			<div class="col-md-6 col-sm-12 card"   style=" box-sizing: border-box; max-width: 675px;margin-left: 30px;background-color: #28c3d4;height: 500px;">
+					<!-- <img src="bg9.jpg" style="width: 100%;height: 375px;"> -->
+
+					<h3 style="color: white">Prediction of passengers travelling to particular Stations from Dadar.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph21">
+		    <script>
+		        var graph32 = {{plot32 | safe}};
+		        
+		        Plotly.plot('bargraph21',graph32,{});
+		        
+		    </script>
+	  </div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-12"></div>
+				<div class="col-md-4 col-sm-12 card"   style=" box-sizing: border-box;max-width: 50%;margin-left: 25px;background-color: #28c3d4;height: 500px;">
+					<!-- <img src="../static/imgs/bg9.jpg" style="width: 100%;height: 375px;"> -->
+					<h3 style="color: white">Prediction of passengers travelling on Week Days from Dadar.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div id="piegraph10" >
+		    <script>
+		        var pie31 = {{plot31 | safe}};
+		        
+		        Plotly.plot('piegraph10',pie31,{});
+		        
+		    </script>
+	 </div>
+	  </div>
+				</div>
+				
+														<!-- wide card or graph -->
+			<div class="row" >
+				<div class="col-md-3 col-sm-12"></div>
+				<div class="col-md-9 col-sm-12 card" style="margin-left: 21%;background-color: #589167;">
+					<!-- <img src="../static/imgs/bg9.jpg" style="object-fit: cover;width: 100%;height: 375px;"> -->
+					<h3 style="color: white">Time series crowd analysis of Passengers for Dadar.</h3>
+					<div class="container" style="width: 100%;height: 375px;">
+					<div class="chart" id="bargraph22">
+		    <script>
+		        var graph33 = {{plot33 | safe}};
+		        
+		        Plotly.plot('bargraph22',graph33,{});
+		        
+		    </script>
+	  </div>
+	  </div>
+
+			</div>
+
+			</div>
+</div>
+		</section>
+		<br><br>
+</div>
+		</div>
+		</section><br><br>
+	</div>
+
+	
+		
+	<script>
+ function function1() {
+ var x = document.getElementById("myDIV");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+ }
+ function function2() {
+ var y = document.getElementById("myDIV1");
+ if (y.style.display === "none") {
+    y.style.display = "block";
+  } else {
+    y.style.display = "none";
+  }
+ }
+ function function3() {
+ var z = document.getElementById("myDIV2");
+ if (z.style.display === "none") {
+    z.style.display = "block";
+  } else {
+    z.style.display = "none";
+  }
+ } 
+ function function4() {
+ var a = document.getElementById("myDIV3");
+ if (a.style.display === "none") {
+    a.style.display = "block";
+  } else {
+    a.style.display = "none";
+  }
+ } 
+ function function5() {
+ var b = document.getElementById("myDIV4");
+ if (b.style.display === "none") {
+    b.style.display = "block";
+  } else {
+    b.style.display = "none";
+  }
+ } 
+ function function6() {
+ var c = document.getElementById("myDIV5");
+ if (c.style.display === "none") {
+    c.style.display = "block";
+  } else {
+    c.style.display = "none";
+  }
+ } 
+ </script>
+
+
+
+
+</body>
+</html>
