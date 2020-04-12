@@ -1,8 +1,6 @@
 from flask import Flask, render_template
 import plotly
 import plotly.graph_objects as go
-import chart_studio.plotly as py
-import plotly.figure_factory as FF
 import numpy as np
 from flask import *
 
@@ -68,11 +66,13 @@ def index():
     x=['Palghar','Borivali','Andheri','Dadar','Vasai','Churchgate','Boisar','Saphale','Malad','Santacruz']
     x1=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
     stack0 =go.Pie(labels=x, values=y, name='Minimum',text=x)
-    stack1=go.Scatter(x=x1, y=y2, name='Low 2007',line = dict(color='royalblue', width=4, dash='solid'))
-    stack2 =go.Bar(x=x,y=y1, name='Minimum',textposition='inside', marker=dict(color='rgb(231,107,243)', opacity=1))
+    stack1 = go.Figure(go.Scatter(x=x1, y=y2,line = dict(color='royalblue', width=4, dash='solid')))
+    stack1.update_layout(xaxis_title="Week Days",yaxis_title="Number of Passengers travelled",)
+    stack2 =go.Figure(go.Bar(x=x,y=y1,text=y1, textposition='inside',marker=dict(color='rgb(231,107,243)', opacity=1)))
+    stack2.update_layout(xaxis_title="Stations Name",yaxis_title="Amount")
     data=[stack0]
-    data1=[stack1]
-    data2=[stack2]
+    data1=stack1
+    data2=stack2
     graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON1 = json.dumps(data1, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON2 = json.dumps(data2, cls=plotly.utils.PlotlyJSONEncoder)
@@ -96,11 +96,13 @@ def index():
     for i in range(len(station_virar)):
     	crowd_virar.append(virar[virar["Destination"]==station_virar[i]].Destination.count()//b)
     stack19 =go.Pie(labels=x1, values=lvi, name='Minimum',text=x1)
-    stack20=go.Scatter(x=x, y=crowd_virar, name='Low 2007',line = dict(color='royalblue', width=4, dash='solid'))
-    stack21 =go.Bar(x=time,y=time_value_virar, name='Minimum',textposition='inside', marker=dict(color='rgb(231,107,243)', opacity=1))
+    stack20=go.Figure(go.Scatter(x=x, y=crowd_virar,line = dict(color='royalblue', width=4, dash='solid')))
+    stack21 =go.Figure(go.Bar(x=time,y=time_value_virar, text=time_value_virar,textposition='inside', marker=dict(color='rgb(5, 245, 217)', opacity=1)))
+    stack20.update_layout(yaxis_title="Number of Passengers to be Arrived",xaxis_title="Stations Name")
+    stack21.update_layout(xaxis_title="Time Zone",yaxis_title="Number of Passengers to be Present")
     data19=[stack19]
-    data20=[stack20]
-    data21=[stack21]
+    data20=stack20
+    data21=stack21
     graphJSON19 = json.dumps(data19, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON20 = json.dumps(data20, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON21 = json.dumps(data21, cls=plotly.utils.PlotlyJSONEncoder)
@@ -117,11 +119,13 @@ def index():
     x2=['Palghar','Borivali','Andheri','Dadar','Virar','Churchgate','Boisar','Saphale','Malad','Santacruz']
     x3=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
     stack3 =go.Pie(labels=x2, values=y3, name='Minimum',text=x)
-    stack4=go.Scatter(x=x3, y=y5, name='Low 2007',line = dict(color='#3477eb', width=4, dash='solid'))
-    stack5 =go.Bar(x=x2,y=y4, name='Minimum',textposition='outside', marker=dict(color='rgb(52, 119, 235)', opacity=1))
+    stack4=go.Figure(go.Scatter(x=x3, y=y5,line = dict(color='#3477eb', width=4, dash='solid')))
+    stack5 =go.Figure(go.Bar(x=x2,y=y4,text=y4,textposition='inside', marker=dict(color='rgb(52, 119, 235)', opacity=1)))
+    stack4.update_layout(xaxis_title="Week Days",yaxis_title="Number of Passengers travelled",)
+    stack5.update_layout(xaxis_title="Stations Name",yaxis_title="Amount")
     data3=[stack3]
-    data4=[stack4]
-    data5=[stack5]
+    data4=stack4
+    data5=stack5
     graphJSON3 = json.dumps(data3, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON4 = json.dumps(data4, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON5 = json.dumps(data5, cls=plotly.utils.PlotlyJSONEncoder)
@@ -143,11 +147,13 @@ def index():
     for i in range(len(station_vasai)):
     	crowd_vasai.append(vasai[vasai["Destination"]==station_vasai[i]].Destination.count()//b)
     stack22 =go.Pie(labels=x1, values=lva, name='Minimum',text=x1)
-    stack23=go.Scatter(x=station_vasai, y=crowd_vasai, name='Low 2007',line = dict(color='royalblue', width=4, dash='solid'))
-    stack24 =go.Bar(x=time,y=time_value_vasai, name='Minimum',textposition='inside', marker=dict(color='rgb(231,107,243)', opacity=1))
+    stack23=go.Figure(go.Scatter(x=station_vasai, y=crowd_vasai,line = dict(color='royalblue', width=4, dash='solid')))
+    stack24 =go.Figure(go.Bar(x=time,y=time_value_vasai, text=time_value_vasai,textposition='inside', marker=dict(color='rgb(7, 242, 121)', opacity=1)))
+    stack23.update_layout(yaxis_title="Number of Passengers to be Arrived",xaxis_title="Stations Name")
+    stack24.update_layout(xaxis_title="Time Zone",yaxis_title="Number of Passengers to be Present")
     data22=[stack22]
-    data23=[stack23]
-    data24=[stack24]
+    data23=stack23
+    data24=stack24
     graphJSON22 = json.dumps(data22, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON23 = json.dumps(data23, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON24 = json.dumps(data24, cls=plotly.utils.PlotlyJSONEncoder)
@@ -164,11 +170,13 @@ def index():
     x4=['Vasai','Borivali','Andheri','Dadar','Virar','Churchgate','Boisar','Saphale','Malad','Santacruz']
     x5=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
     stack6 =go.Pie(labels=x4, values=y6, name='Minimum',text=x)
-    stack7=go.Scatter(x=x5, y=y8, name='Low 2007',line = dict(color='#107a0b', width=4, dash='solid'))
-    stack8 =go.Bar(x=x4,y=y7, name='Minimum',textposition='outside', marker=dict(color='rgb(28, 222, 18)', opacity=1))
+    stack7=go.Figure(go.Scatter(x=x5, y=y8,line = dict(color='#107a0b', width=4, dash='solid')))
+    stack8 =go.Figure(go.Bar(x=x4,y=y7, text=y7,textposition='inside', marker=dict(color='rgb(28, 222, 18)', opacity=1)))
+    stack7.update_layout(xaxis_title="Week Days",yaxis_title="Number of Passengers travelled",)
+    stack8.update_layout(xaxis_title="Stations Name",yaxis_title="Amount")
     data6=[stack6]
-    data7=[stack7]
-    data8=[stack8]
+    data7=stack7
+    data8=stack8
     graphJSON6 = json.dumps(data6, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON7 = json.dumps(data7, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON8 = json.dumps(data8, cls=plotly.utils.PlotlyJSONEncoder)
@@ -190,11 +198,13 @@ def index():
     for i in range(len(station_palghar)):
     	crowd_palghar.append(palghar[palghar["Destination"]==station_palghar[i]].Destination.count()//b)
     stack25 =go.Pie(labels=x1, values=lp, name='Minimum',text=x1)
-    stack26=go.Scatter(x=station_palghar, y=crowd_palghar, name='Low 2007',line = dict(color='royalblue', width=4, dash='solid'))
-    stack27 =go.Bar(x=time,y=time_value_palghar, name='Minimum',textposition='inside', marker=dict(color='rgb(231,107,243)', opacity=1))
+    stack26=go.Figure(go.Scatter(x=station_palghar, y=crowd_palghar,line = dict(color='royalblue', width=4, dash='solid')))
+    stack27 =go.Figure(go.Bar(x=time,y=time_value_palghar,text=time_value_palghar,textposition='inside', marker=dict(color='rgb(150, 7, 245)', opacity=1)))
+    stack26.update_layout(yaxis_title="Number of Passengers to be Arrived",xaxis_title="Stations Name")
+    stack27.update_layout(xaxis_title="Time Zone",yaxis_title="Number of Passengers to be Present")
     data25=[stack25]
-    data26=[stack26]
-    data27=[stack27]
+    data26=stack26
+    data27=stack27
     graphJSON25 = json.dumps(data25, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON26 = json.dumps(data26, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON27 = json.dumps(data27, cls=plotly.utils.PlotlyJSONEncoder)
@@ -211,11 +221,13 @@ def index():
     x6=['Vasai','Palghar','Andheri','Dadar','Virar','Churchgate','Boisar','Saphale','Malad','Santacruz']
     x7=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
     stack9 =go.Pie(labels=x6, values=y9, name='Minimum',text=x)
-    stack10=go.Scatter(x=x7, y=y11, name='Low 2007',line = dict(color='#90a808', width=4, dash='solid'))
-    stack11 =go.Bar(x=x6,y=y10, name='Minimum',textposition='outside', marker=dict(color='rgb(236, 240, 12)', opacity=1))
+    stack10=go.Figure(go.Scatter(x=x7, y=y11,line = dict(color='#90a808', width=4, dash='solid')))
+    stack11 =go.Figure(go.Bar(x=x6,y=y10, text=y10,textposition='inside', marker=dict(color='rgb(236, 240, 12)', opacity=1)))
+    stack10.update_layout(xaxis_title="Week Days",yaxis_title="Number of Passengers travelled",)
+    stack11.update_layout(xaxis_title="Stations Name",yaxis_title="Amount")
     data9=[stack9]
-    data10=[stack10]
-    data11=[stack11]
+    data10=stack10
+    data11=stack11
     graphJSON9 = json.dumps(data9, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON10 = json.dumps(data10, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON11 = json.dumps(data11, cls=plotly.utils.PlotlyJSONEncoder)
@@ -237,11 +249,13 @@ def index():
     for i in range(len(station_borivali)):
     	crowd_borivali.append(borivali[borivali["Destination"]==station_borivali[i]].Destination.count()//b)
     stack28 =go.Pie(labels=x1, values=lb, name='Minimum',text=x1)
-    stack29=go.Scatter(x=station_borivali, y=crowd_borivali, name='Low 2007',line = dict(color='royalblue', width=4, dash='solid'))
-    stack30 =go.Bar(x=time,y=time_value_borivali, name='Minimum',textposition='inside', marker=dict(color='rgb(231,107,243)', opacity=1))
+    stack29=go.Figure(go.Scatter(x=station_borivali, y=crowd_borivali,line = dict(color='royalblue', width=4, dash='solid')))
+    stack30 =go.Figure(go.Bar(x=time,y=time_value_borivali, text=time_value_borivali,textposition='inside', marker=dict(color='rgb(252, 252, 8)', opacity=1)))
+    stack29.update_layout(yaxis_title="Number of Passengers to be Arrived",xaxis_title="Stations Name")
+    stack30.update_layout(xaxis_title="Time Zone",yaxis_title="Number of Passengers to be Present")
     data28=[stack28]
-    data29=[stack29]
-    data30=[stack30]
+    data29=stack29
+    data30=stack30
     graphJSON28 = json.dumps(data28, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON29 = json.dumps(data29, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON30 = json.dumps(data30, cls=plotly.utils.PlotlyJSONEncoder)
@@ -258,11 +272,13 @@ def index():
     x8=['Vasai','Borivali','Andheri','Palghar','Virar','Churchgate','Boisar','Saphale','Malad','Santacruz']
     x9=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
     stack12 =go.Pie(labels=x8, values=y12, name='Minimum',text=x)
-    stack13=go.Scatter(x=x9, y=y14, name='Low 2007',line = dict(color='#400e10', width=4, dash='solid'))
-    stack14 =go.Bar(x=x8,y=y13, name='Minimum',textposition='outside', marker=dict(color='rgb(214, 11, 21)', opacity=1))
+    stack13=go.Figure(go.Scatter(x=x9, y=y14, line = dict(color='#400e10', width=4, dash='solid')))
+    stack14 =go.Figure(go.Bar(x=x8,y=y13, text=y13,textposition='inside', marker=dict(color='rgb(214, 11, 21)', opacity=1)))
+    stack13.update_layout(xaxis_title="Week Days",yaxis_title="Number of Passengers travelled",)
+    stack14.update_layout(xaxis_title="Stations Name",yaxis_title="Amount")
     data12=[stack12]
-    data13=[stack13]
-    data14=[stack14]
+    data13=stack13
+    data14=stack14
     graphJSON12 = json.dumps(data12, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON13 = json.dumps(data13, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON14 = json.dumps(data14, cls=plotly.utils.PlotlyJSONEncoder)
@@ -284,11 +300,13 @@ def index():
     for i in range(len(station_dadar)):
     	crowd_dadar.append(dadar[dadar["Destination"]==station_dadar[i]].Destination.count()//b)
     stack31 =go.Pie(labels=x1, values=ld, name='Minimum',text=x1)
-    stack32=go.Scatter(x=station_dadar, y=crowd_dadar, name='Low 2007',line = dict(color='royalblue', width=4, dash='solid'))
-    stack33 =go.Bar(x=time,y=time_value_dadar, name='Minimum',textposition='inside', marker=dict(color='rgb(231,107,243)', opacity=1))
+    stack32=go.Figure(go.Scatter(x=station_dadar, y=crowd_dadar,line = dict(color='royalblue', width=4, dash='solid')))
+    stack33 =go.Figure(go.Bar(x=time,y=time_value_dadar, text=time_value_dadar,textposition='inside', marker=dict(color='rgb(104, 7, 250)', opacity=1)))
+    stack32.update_layout(yaxis_title="Number of Passengers to be Arrived",xaxis_title="Stations Name")
+    stack33.update_layout(xaxis_title="Time Zone",yaxis_title="Number of Passengers to be Present")
     data31=[stack31]
-    data32=[stack32]
-    data33=[stack33]
+    data32=stack32
+    data33=stack33
     graphJSON31 = json.dumps(data31, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON32 = json.dumps(data32, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON33 = json.dumps(data33, cls=plotly.utils.PlotlyJSONEncoder)
@@ -307,14 +325,17 @@ def index():
     #revenue collected by each station
     stack15 =go.Pie(labels=l, values=y15, name='Minimum',text=x)
     #total passengers travelled from particular station
-    stack16=go.Scatter(x=l, y=l1, name='Low 2007',line = dict(color='#f58d05', width=4, dash='solid'))
+    stack16=go.Figure(go.Scatter(x=l, y=l1,line = dict(color='#f58d05', width=4, dash='solid')))
     #total passengers travelled to a particular station
-    stack17 =go.Bar(x=l2,y=l3, textposition='none', marker=dict(color='#f58d05', opacity=1))
-    stack18 =go.Bar(x=date_list,y=date_list_count, textposition='none', marker=dict(color='rgb(245, 5, 21)', opacity=1))
+    stack17 =go.Figure(go.Bar(x=l2,y=l3,text=l3, textposition='inside', marker=dict(color='#f58d05', opacity=1)))
+    stack18 =go.Figure(go.Bar(x=date_list,y=date_list_count,text=date_list_count, textposition='inside', marker=dict(color='rgb(245, 5, 21)', opacity=1)))
+    stack16.update_layout(yaxis_title="Number of Passengers travelled from this Station",xaxis_title="Stations Name")
+    stack17.update_layout(xaxis_title="Stations Name",yaxis_title="Number of Passengers travelled to this Station")
+    stack18.update_layout(xaxis_title="Dates",yaxis_title="Number of Passengers travelled at this Date")
     data15=[stack15]
-    data16=[stack16]
-    data17=[stack17]
-    data18=[stack18]
+    data16=stack16
+    data17=stack17
+    data18=stack18
     graphJSON15 = json.dumps(data15, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON16 = json.dumps(data16, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON17 = json.dumps(data17, cls=plotly.utils.PlotlyJSONEncoder)
@@ -334,14 +355,17 @@ def index():
     #next day prediction
     stack34 =go.Pie(labels=l, values=next_day, name='Minimum',text=l)
     #weekdays prediction
-    stack35=go.Scatter(x=x1, y=lda, name='Low 2007',line = dict(color='#f58d05', width=4, dash='solid'))
+    stack35=go.Figure(go.Scatter(x=x1, y=lda, name='Low 2007',line = dict(color='#f58d05', width=4, dash='solid')))
     #time series graph prediction
-    stack36 =go.Bar(x=time,y=time_value_dashboard, textposition='none', marker=dict(color='#f58d05', opacity=1))
-    stack37 =go.Bar(x=l2,y=station_dashboard, textposition='none', marker=dict(color='rgb(245, 5, 21)', opacity=1))
+    stack36 =go.Figure(go.Bar(x=time,y=time_value_dashboard,text=time_value_dashboard, textposition='inside', marker=dict(color='#f58d05', opacity=1)))
+    stack37 =go.Figure(go.Bar(x=l2,y=station_dashboard,text=station_dashboard, textposition='inside', marker=dict(color='rgb(245, 5, 21)', opacity=1)))
+    stack35.update_layout(yaxis_title="Number of Passengers Will be Travelling Next Week",xaxis_title="Week Days")
+    stack36.update_layout(xaxis_title="Time Zone",yaxis_title="Number of Passengers will be present at this time.")
+    stack37.update_layout(xaxis_title="Station Name",yaxis_title="Number of Passengers will Arrived.")
     data34=[stack34]
-    data35=[stack35]
-    data36=[stack36]
-    data37=[stack37]
+    data35=stack35
+    data36=stack36
+    data37=stack37
     graphJSON34 = json.dumps(data34, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON35 = json.dumps(data35, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON36 = json.dumps(data36, cls=plotly.utils.PlotlyJSONEncoder)
