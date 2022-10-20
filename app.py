@@ -107,7 +107,7 @@ def index():
     graphJSON20 = json.dumps(data20, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON21 = json.dumps(data21, cls=plotly.utils.PlotlyJSONEncoder)
 
-    # for vasai
+    #for vasai road
     #number of people going from vasai to outstation
     y3=[len(vasai[vasai
     	.Destination == 'palghar']),len(vasai[vasai.Destination == 'borivali']),len(vasai[vasai.Destination == 'andheri']),len(vasai[vasai.Destination == 'dadar']),len(vasai[vasai.Destination == 'virar']),len(vasai[vasai.Destination == 'churchgate']),len(vasai[vasai.Destination == 'boisar']),len(vasai[vasai.Destination == 'saphale']),len(vasai[vasai.Destination == 'malad']),len(vasai[vasai.Destination == 'santacruz'])]
@@ -210,7 +210,7 @@ def index():
     graphJSON27 = json.dumps(data27, cls=plotly.utils.PlotlyJSONEncoder)
 
 
-    # for borivali
+    #for borivali stn
     #number of people going from borivali to outstation
     y9=[len(borivali[borivali.Destination == 'vasai']),len(borivali[borivali.Destination == 'palghar']),len(borivali[borivali.Destination == 'andheri']),len(borivali[borivali.Destination == 'dadar']),len(borivali[borivali.Destination == 'virar']),len(borivali[borivali.Destination == 'churchgate']),len(borivali[borivali.Destination == 'boisar']),len(borivali[borivali.Destination == 'saphale']),len(borivali[borivali.Destination == 'malad']),len(borivali[borivali.Destination == 'santacruz'])]
     #cost collected from people going out from borivali
@@ -261,7 +261,7 @@ def index():
     graphJSON30 = json.dumps(data30, cls=plotly.utils.PlotlyJSONEncoder)
 
 
-    # for dadar
+    #for dadar
     #number of people going from dadar to outstation
     y12=[len(dadar[dadar.Destination == 'vasai']),len(dadar[dadar.Destination == 'borivali']),len(dadar[dadar.Destination == 'andheri']),len(dadar[dadar.Destination == 'palghar']),len(dadar[dadar.Destination == 'virar']),len(dadar[dadar.Destination == 'churchgate']),len(dadar[dadar.Destination == 'boisar']),len(dadar[dadar.Destination == 'saphale']),len(dadar[dadar.Destination == 'malad']),len(dadar[dadar.Destination == 'santacruz'])]
     #cost collected from people going out from dadar
@@ -311,7 +311,7 @@ def index():
     graphJSON32 = json.dumps(data32, cls=plotly.utils.PlotlyJSONEncoder)
     graphJSON33 = json.dumps(data33, cls=plotly.utils.PlotlyJSONEncoder)
 
-    #dashboard
+    #dashboard function
     Total_virar = virar['Cost'].sum()
     Total_dadar = dadar['Cost'].sum()
     Total_borivali=borivali['Cost'].sum()
@@ -380,5 +380,6 @@ def index():
 
     return render_template('index.html', plot=graphJSON,plot1=graphJSON1,plot2=graphJSON2,plot3=graphJSON3,plot4=graphJSON4,plot5=graphJSON5,plot6=graphJSON6,plot7=graphJSON7,plot8=graphJSON8,plot9=graphJSON9,plot10=graphJSON10,plot11=graphJSON11,plot12=graphJSON12,plot13=graphJSON13,plot14=graphJSON14,s=s,s1=s1,s2=s2,plot15=graphJSON15,plot16=graphJSON16,plot17=graphJSON17,plot18=graphJSON18,plot19=graphJSON19,plot20=graphJSON20,plot21=graphJSON21,plot22=graphJSON22,plot23=graphJSON23,plot24=graphJSON24,plot25=graphJSON25,plot26=graphJSON26,plot27=graphJSON27,plot28=graphJSON28,plot29=graphJSON29,plot30=graphJSON30,plot31=graphJSON31,plot32=graphJSON32,plot33=graphJSON33,plot34=graphJSON34,plot35=graphJSON35,plot36=graphJSON36,plot37=graphJSON37,o=o,p=p)
 
+#main function
 if __name__ == '__main__':
     app.run()
